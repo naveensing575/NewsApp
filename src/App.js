@@ -1,42 +1,44 @@
 import './App.css';
 import React, { Component } from 'react'
 import NavBar from './components/NavBar';
-import LoadingBar from 'react-top-loading-bar';
 import News from './components/News';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
-} from 'react-router-dom';
+  Route,
+} from "react-router-dom";
+import LoadingBar from 'react-top-loading-bar'
 
 export default class App extends Component {
+  pageSize = 6;
 
-  constructor() {
-    super()
-  
-    this.state = {
-      progress: 100
-    }
+  state = {
+    progress:0
   }
+
+  setProgress = (progress)=>{
+    this.setState({progress: progress})
+  }
+
   render() {
     return (
       <>
-      <LoadingBar
+        <Router>
+        <NavBar/> 
+        <LoadingBar
+        height={3}
         color='#f11946'
-        progress={this.state.progress}
-        onLoaderFinished={() => this.setState({progress:0})}
+        progress={this.state.progress} 
       />
-      <Router>
-        <NavBar/>
         <Routes>
-          <Route exact path='/' element={<News country={'in'} pageSize={6} category={'general'}/>}/>
-          <Route exact path='/general' element={<News country={'in'} pageSize={6} category={'general'}/>}/>
-          <Route exact path='/business' element={<News country={'in'} pageSize={6} category={'business'}/>}/>
-          <Route exact path='/technology' element={<News country={'in'} pageSize={6} category={'technology'}/>}/>
-          <Route exact path='/science' element={<News country={'in'} pageSize={6} category={'science'}/>}/>
-          <Route exact path='/entertainment' element={<News country={'in'} pageSize={6} category={'entertainment'}/>}/>
-          <Route exact path='/sports' element={<News country={'in'} pageSize={6} category={'sports'}/>}/>
-          <Route exact path='/health' element={<News country={'in'} pageSize={6} category={'health'}/>}/>
+          <Route exact path="/" element={<News setProgress={this.setProgress} key="general" pageSize={this.pageSize} country="in" category="general"/>}/> 
+          <Route exact path="/business" element={<News setProgress={this.setProgress} key="business" pageSize={this.pageSize} country="in" category="business"/>}/>
+          <Route exact path="/entertainment" element={<News setProgress={this.setProgress} key="entertainment" pageSize={this.pageSize} country="in" category="entertainment"/>}/>
+          <Route exact path="/general" element={<News setProgress={this.setProgress} key="general" pageSize={this.pageSize} country="in" category="general"/>}/>
+          <Route exact path="/health" element={<News setProgress={this.setProgress} key="health" pageSize={this.pageSize} country="in" category="health"/>}/>
+          <Route exact path="/science" element={<News setProgress={this.setProgress} key="science" pageSize={this.pageSize} country="in" category="science"/>}/>
+          <Route exact path="/sports" element={<News setProgress={this.setProgress} key="sports" pageSize={this.pageSize} country="in" category="sports"/>}/>
+          <Route exact path="/technology" element={<News setProgress={this.setProgress} key="technology" pageSize={this.pageSize} country="in" category="technology"/>}/>
         </Routes>
         </Router>
       </>
